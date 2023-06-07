@@ -1,40 +1,42 @@
 # Configuration for Cog ⚙️
 
+# image: "nvidia/cuda:9.0-cudnn7-devel"
+
 build:
   # Enable GPU and CUDA for face_recognition
-  gpu: true
-  cuda: "9.0"
+  gpu: false
+  # cuda: "11.8"
 
   # Install necessary system packages
-  system_packages:
-    - "software-properties-common"
-    - "git"
-    - "cmake"
-    - "libsm6"
-    - "libxext6"
-    - "libxrender-dev"
-    - "python3-pip"
+  # system_packages:
+  #   - "software-properties-common"
+  #   - "git"
+  #   - "cmake"
+  #   - "libsm6"
+  #   - "libxext6"
+  #   - "libxrender-dev"
+  #   - "python3-pip"
 
   # Python version
-  python_version: "3.8"
+  python_version: "3.10.11"
 
   # Python packages
   python_packages:
-    - "face_recognition"
+    - "face-recognition"
     - "opencv-python"
-    - "scikit-build"
 
   # Additional setup commands
-  run:
-    - "add-apt-repository ppa:ubuntu-toolchain-r/test -y"
-    - "apt-get update && apt-get install -y gcc-6 g++-6"
-    - "update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 50"
-    - "update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 50"
-    - "git clone -b 'v19.16' --single-branch https://github.com/davisking/dlib.git"
-    - "mkdir -p /dlib/build"
-    - "cmake -H/dlib -B/dlib/build -DDLIB_USE_CUDA=1 -DUSE_AVX_INSTRUCTIONS=1"
-    - "cmake --build /dlib/build"
-    - "cd /dlib && python3 /dlib/setup.py install"
+  # run:
+  # - "add-apt-repository ppa:ubuntu-toolchain-r/test -y"
+  # - "apt-get update; apt-get install -y gcc-6 g++-6"
+  # - "update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 50"
+  # - "update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 50"
+  # - "git clone -b 'v19.16' --single-branch https://github.com/davisking/dlib.git"
+  # - "mkdir -p /dlib/build"
+  # - "cmake -H/dlib -B/dlib/build -DDLIB_USE_CUDA=1 -DUSE_AVX_INSTRUCTIONS=1"
+  # - "cmake --build /dlib/build"
+  # - "cd /dlib; python3 /dlib/setup.py install"
+  # - "pip3 install face_recognition"
 
 # Change the pointer to the `Predictor` object in your code
-predict: "find_faces_in_batches.py:Predictor"
+predict: "predict.py:Predictor"

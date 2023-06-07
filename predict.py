@@ -2,7 +2,7 @@
 # https://github.com/replicate/cog/blob/main/docs/python.md
 
 import face_recognition
-import dlib.cuda as cuda
+import dlib
 from typing import List
 import cv2
 import logging
@@ -14,11 +14,11 @@ logging.basicConfig(level=logging.INFO)
 class Predictor(BasePredictor):
     def setup(self):
         """Load the model into memory to make running multiple predictions efficient"""
-        self.use_gpu = cuda.get_num_devices() > 0
+        self.use_gpu = dlib.cuda.get_num_devices() > 0
         if self.use_gpu:
-            logging.info("dlib is using GPU")
+            logging.info("dlib is using GPU", dlib.DLIB_USE_CUDA)
         else:
-            logging.info("dlib is not using GPU")
+            logging.info("dlib is NOT using GPU", dlib.DLIB_USE_CUDA)
 
     def process_batch(self, frames):
         batch_of_face_locations = face_recognition.batch_face_locations(frames, number_of_times_to_upsample=0)
